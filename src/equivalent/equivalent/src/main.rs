@@ -37,11 +37,21 @@ fn main() {
     }
     // remove off-by-one
     cases.remove(0);
+    //currently only proves subsets of the statements
     for case in cases{
         let mut statements = vec![];
         for statement in 1..case.1 {statements.push(Statement { proven: false,proves: false})}
         for implication in case.0{
-            statements[implication.1].proves = true;
+            statements[implication.0].proves = true;
+            statements[implication.1].proven = true;
         }
+        let mut proven_need = 0;
+        let mut proves_need = 0;
+        for statement in statements{
+            if statement.proven == false {proven_need += 1}
+            if statement.proves == false {proves_need += 1}
+        }
+        if proven_need > proves_need{println!("{}", proven_need)}
+        else {println!("{}", proves_need);}
     }
 }
